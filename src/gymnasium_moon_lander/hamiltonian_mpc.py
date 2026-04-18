@@ -1,28 +1,56 @@
 from __future__ import annotations
 
 import argparse
+import importlib
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
-import gymnasium as gym
 import matplotlib
 import numpy as np
 from scipy.optimize import minimize
 
-from gymnasium.envs.box2d.lunar_lander import (
-    FPS,
-    MAIN_ENGINE_POWER,
-    MAIN_ENGINE_Y_LOCATION,
-    SCALE,
-    SIDE_ENGINE_AWAY,
-    SIDE_ENGINE_HEIGHT,
-    SIDE_ENGINE_POWER,
-    VIEWPORT_H,
-    VIEWPORT_W,
-)
+if TYPE_CHECKING:
+    import gymnasium as gym
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+
+
+def _require_legacy_runtime() -> tuple[Any, dict[str, float]]:
+    try:
+        gymnasium = importlib.import_module("gymnasium")
+        module = importlib.import_module("gymnasium.envs.box2d.lunar_lander")
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(
+            "This legacy Gymnasium MPC demo requires the optional legacy dependencies. "
+            "Install them with `python -m pip install -e '.[legacy]'`."
+        ) from exc
+    constants = {
+        "FPS": float(module.FPS),
+        "MAIN_ENGINE_POWER": float(module.MAIN_ENGINE_POWER),
+        "MAIN_ENGINE_Y_LOCATION": float(module.MAIN_ENGINE_Y_LOCATION),
+        "SCALE": float(module.SCALE),
+        "SIDE_ENGINE_AWAY": float(module.SIDE_ENGINE_AWAY),
+        "SIDE_ENGINE_HEIGHT": float(module.SIDE_ENGINE_HEIGHT),
+        "SIDE_ENGINE_POWER": float(module.SIDE_ENGINE_POWER),
+        "VIEWPORT_H": float(module.VIEWPORT_H),
+        "VIEWPORT_W": float(module.VIEWPORT_W),
+    }
+    return gymnasium, constants
+
+
+_GYM_RUNTIME, _LEGACY_CONSTANTS = _require_legacy_runtime()
+gym = _GYM_RUNTIME
+FPS = _LEGACY_CONSTANTS["FPS"]
+MAIN_ENGINE_POWER = _LEGACY_CONSTANTS["MAIN_ENGINE_POWER"]
+MAIN_ENGINE_Y_LOCATION = _LEGACY_CONSTANTS["MAIN_ENGINE_Y_LOCATION"]
+SCALE = _LEGACY_CONSTANTS["SCALE"]
+SIDE_ENGINE_AWAY = _LEGACY_CONSTANTS["SIDE_ENGINE_AWAY"]
+SIDE_ENGINE_HEIGHT = _LEGACY_CONSTANTS["SIDE_ENGINE_HEIGHT"]
+SIDE_ENGINE_POWER = _LEGACY_CONSTANTS["SIDE_ENGINE_POWER"]
+VIEWPORT_H = _LEGACY_CONSTANTS["VIEWPORT_H"]
+VIEWPORT_W = _LEGACY_CONSTANTS["VIEWPORT_W"]
 
 
 DT = 1.0 / FPS

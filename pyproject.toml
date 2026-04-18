@@ -5,16 +5,25 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "gymnasium-moon-lander"
 version = "0.1.0"
-description = "Random-policy LunarLander rollout animation demo using Gymnasium."
+description = "Paper-aligned seven-thruster lunar descent simulator with scoring and visualization pipelines."
 readme = "README.md"
 requires-python = ">=3.10,<3.14"
 dependencies = [
-  "gymnasium[box2d]>=1.1.1",
   "matplotlib>=3.8",
   "numpy>=1.26",
   "pillow>=10.0",
+  "pytest>=8.3",
   "scipy>=1.13",
 ]
+
+[project.optional-dependencies]
+legacy = [
+  "gymnasium[box2d]>=1.1.1",
+]
+
+[project.scripts]
+simulate_descent = "gymnasium_moon_lander.cli_simulate:main"
+benchmark_controllers = "gymnasium_moon_lander.cli_benchmark:main"
 
 [tool.setuptools]
 package-dir = {"" = "src"}

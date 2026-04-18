@@ -1,0 +1,3 @@
+[console_scripts]
+benchmark_controllers = gymnasium_moon_lander.cli_benchmark:main
+simulate_descent = gymnasium_moon_lander.cli_simulate:main

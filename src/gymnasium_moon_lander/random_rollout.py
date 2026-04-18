@@ -1,11 +1,15 @@
 from __future__ import annotations
 
 import argparse
+import importlib
 from dataclasses import dataclass
 from pathlib import Path
+from typing import TYPE_CHECKING, Any
 
-import gymnasium as gym
 from PIL import Image
+
+if TYPE_CHECKING:
+    import gymnasium as gym
 
 
 DEFAULT_OUTPUT = Path("outputs/random_lander.gif")
@@ -21,12 +25,22 @@ class RolloutResult:
 class RandomActionModel:
     """Toy policy that samples a fresh random discrete action every step."""
 
-    def __init__(self, action_space: gym.Space) -> None:
+    def __init__(self, action_space: Any) -> None:
         self._action_space = action_space
 
     def predict(self, observation: object) -> int:
         del observation
         return int(self._action_space.sample())
+
+
+def _require_gymnasium():
+    try:
+        return importlib.import_module("gymnasium")
+    except ModuleNotFoundError as exc:
+        raise RuntimeError(
+            "This legacy Gymnasium demo requires the optional legacy dependencies. "
+            "Install them with `python -m pip install -e '.[legacy]'`."
+        ) from exc
 
 
 def save_gif(frames: list[Image.Image], output_path: Path, fps: int) -> None:
@@ -55,6 +69,7 @@ def run_random_rollout(
     if max_steps <= 0:
         raise ValueError("max_steps must be a positive integer")
 
+    gym = _require_gymnasium()
     env = gym.make("LunarLander-v3", render_mode="rgb_array")
     frames: list[Image.Image] = []
     total_reward = 0.0

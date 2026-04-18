@@ -1,14 +1,21 @@
-<<<<<<< HEAD
-# Gymnasium-moon-lander
-# Gymnasium-moon-lander
-=======
 # Gymnasium Moon Lander
 
-This repository contains a minimal Gymnasium `LunarLander-v3` demo that rolls out a toy model which picks a random action at every timestep and saves the episode as an animated GIF.
+This repository now centers on a custom lunar-descent simulator aligned with the paper in `Vol4_Project.pdf`. The primary model is a seven-state, seven-thruster planar lunar module with:
+
+- polar-coordinate dynamics for `r`, `phi`, and `theta`
+- time-varying mass with fuel depletion
+- a moving landing-site reference trajectory
+- terrain hazards, touchdown gating, and failure envelopes
+- scoring based on the paper-style cost functional
+- plot and GIF generation for each rollout
+
+The original Gymnasium `LunarLander-v3` experiments are still present as legacy demos.
 
 ## Setup
 
-Use Python 3.12 or 3.10. The default `python3` on this machine is 3.14, which is not a good target for the current Box2D stack.
+Use Python 3.12 or 3.10. The default `python3` on this machine is 3.14, which is not a supported target for this package.
+
+Install the primary simulator:
 
 ```bash
 python3.12 -m venv .venv
@@ -17,53 +24,93 @@ python -m pip install --upgrade pip
 python -m pip install -e .
 ```
 
-## Generate an animation
+If you also want the old Gymnasium / Box2D demos, install the legacy extra:
+
+```bash
+python -m pip install -e '.[legacy]'
+```
+
+## Run A Single Rollout
+
+The main entrypoint is `simulate_descent`, which runs one controller on one deterministic scenario and writes a full artifact bundle under `outputs/<controller>/<scenario>/`.
+
+```bash
+source .venv/bin/activate
+simulate_descent --controller tvlqr_tracking --scenario nominal
+```
+
+This writes:
+
+- `metrics.json`
+- `trajectory_local.png`
+- `state_history.png`
+- `control_history.png`
+- `cost_history.png`
+- `rollout.gif`
+
+Useful options:
+
+- `--controller scripted_hover_descent`
+- `--controller path/to/open_loop_bundle.npz`
+- `--controller package.module:factory`
+- `--scenario crossrange`
+- `--output-root custom_outputs`
+- `--skip-gif`
+
+## Benchmark Controllers
+
+Use `benchmark_controllers` to sweep one or more controllers across the deterministic scenario suite.
+
+```bash
+source .venv/bin/activate
+benchmark_controllers --controllers tvlqr_tracking scripted_hover_descent
+```
+
+This writes per-rollout artifact bundles plus:
+
+- `outputs/benchmark.csv`
+- `outputs/benchmark.md`
+
+Benchmark artifacts live under the same scenario directories as standalone runs: `outputs/<controller>/<scenario>/`. The benchmark command also writes `benchmark.csv` and `benchmark.md` at the top level of `outputs/`.
+
+The built-in scenarios are:
+
+- `nominal`
+- `crossrange`
+- `attitude_recovery`
+- `low_fuel`
+
+## Controller Interface
+
+Controllers are expected to implement:
+
+```python
+def reset(self, scenario, reference) -> None: ...
+def action(self, t, state) -> np.ndarray: ...
+```
+
+The `action` result must be a length-7 vector of physical thrust commands in Newtons:
+
+```text
+[u_l1, u_l2, u_l3, u_r1, u_r2, u_r3, u_dp]
+```
+
+You can also use the helper allocator exported by the package:
+
+```python
+from gymnasium_moon_lander import allocate_body_wrench
+```
+
+That helper maps a desired body-frame wrench `(fx_body, fy_body, moment_body)` into feasible nonnegative thruster commands.
+
+## Legacy Gymnasium Demos
+
+The previous scripts are still available after installing `.[legacy]`:
 
 ```bash
 source .venv/bin/activate
 python -m gymnasium_moon_lander.random_rollout --output outputs/random_lander.gif
-```
-
-Optional flags:
-
-- `--seed 7`
-- `--max-steps 500`
-- `--fps 30`
-
-The script prints the total reward and the path to the generated GIF when it finishes.
-
-## Run the Hamiltonian MPC experiment
-
-This repository also includes a simple Hamiltonian-style model predictive controller for the continuous-action Lunar Lander without wind or turbulence.
-
-```bash
-source .venv/bin/activate
 python -m gymnasium_moon_lander.hamiltonian_mpc --mode improved --seeds 7 11 19
 ```
 
-Use `--mode baseline` to run the direct reward-tracking formulation that the improved controller replaces.
-
-To export a parametric `x`/`y` trajectory plot for a single improved-controller rollout, pass `--plot-output`:
-
-```bash
-source .venv/bin/activate
-python -m gymnasium_moon_lander.hamiltonian_mpc \
-  --mode improved \
-  --seeds 7 \
-  --plot-output outputs/improved_seed7_trajectory.png
-```
-
-The saved plot traces the lander's horizontal and vertical position over the episode, colors the samples by timestep, and marks the midpoint between the landing flags with a red `X`.
-
-To export all observation state variables against time for a single rollout, use `--state-plot-output`:
-
-```bash
-source .venv/bin/activate
-python -m gymnasium_moon_lander.hamiltonian_mpc \
-  --mode improved \
-  --seeds 7 \
-  --state-plot-output outputs/improved_seed7_state_history.png
-```
-
-The saved figure uses time in seconds on the x-axis, stops at the actual end of the episode, and plots `x`, `y`, velocities, angle, angular velocity, and both leg-contact indicators.
->>>>>>> e6c40cb (first gymnasium simulation from before presentation)
+Those scripts are no longer the primary workflow and are kept only as legacy references.
