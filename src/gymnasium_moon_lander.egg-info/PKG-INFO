@@ -1,7 +1,15 @@
-<<<<<<< HEAD
-# Gymnasium-moon-lander
-# Gymnasium-moon-lander
-=======
+Metadata-Version: 2.4
+Name: gymnasium-moon-lander
+Version: 0.1.0
+Summary: Random-policy LunarLander rollout animation demo using Gymnasium.
+Requires-Python: <3.14,>=3.10
+Description-Content-Type: text/markdown
+Requires-Dist: gymnasium[box2d]>=1.1.1
+Requires-Dist: matplotlib>=3.8
+Requires-Dist: numpy>=1.26
+Requires-Dist: pillow>=10.0
+Requires-Dist: scipy>=1.13
+
 # Gymnasium Moon Lander
 
 This repository contains a minimal Gymnasium `LunarLander-v3` demo that rolls out a toy model which picks a random action at every timestep and saves the episode as an animated GIF.
@@ -54,16 +62,3 @@ python -m gymnasium_moon_lander.hamiltonian_mpc \
 ```
 
 The saved plot traces the lander's horizontal and vertical position over the episode, colors the samples by timestep, and marks the midpoint between the landing flags with a red `X`.
-
-To export all observation state variables against time for a single rollout, use `--state-plot-output`:
-
-```bash
-source .venv/bin/activate
-python -m gymnasium_moon_lander.hamiltonian_mpc \
-  --mode improved \
-  --seeds 7 \
-  --state-plot-output outputs/improved_seed7_state_history.png
-```
-
-The saved figure uses time in seconds on the x-axis, stops at the actual end of the episode, and plots `x`, `y`, velocities, angle, angular velocity, and both leg-contact indicators.
->>>>>>> e6c40cb (first gymnasium simulation from before presentation)
