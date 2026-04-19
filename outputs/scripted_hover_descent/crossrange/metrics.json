@@ -1,0 +1,30 @@
+{
+  "controller_name": "scripted_hover_descent",
+  "scenario_name": "crossrange",
+  "success": false,
+  "terminal_status": "touchdown_off_pad",
+  "total_cost": 158907.5427971983,
+  "integrated_cost": 157662.9115453655,
+  "terminal_cost": 744.6312518327869,
+  "failure_penalty": 500.0,
+  "fuel_used": 3852.5027252906257,
+  "final_mass": 11147.497274709374,
+  "max_peak_thrust_fraction": 0.9999999999999998,
+  "max_constraint_violation": 0.0,
+  "touchdown_errors": {
+    "radial_velocity": 0.02653192694450832,
+    "along_track_velocity": 0.28209371025940655,
+    "attitude_error_deg": 0.0008356344870406661,
+    "attitude_rate_error_deg_s": 4.761300048781252e-06,
+    "remaining_mass_margin": 11147.497274709374
+  },
+  "final_tracking_state": {
+    "altitude": 2.381956670898944,
+    "radial_velocity": -0.02653192694450832,
+    "attitude_error": -1.458457314207351e-05,
+    "attitude_rate_error": -8.310036252659947e-08,
+    "along_track": 80.9149376395865,
+    "along_track_velocity": -0.28209371025940655,
+    "mass_error": 2147.4972747093743
+  }
+}

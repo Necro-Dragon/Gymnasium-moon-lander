@@ -1,0 +1,24 @@
+{
+  "controller_name": "scripted_hover_descent",
+  "scenario_name": "nominal",
+  "success": false,
+  "terminal_status": "fuel_depletion",
+  "total_cost": 203908.25321858271,
+  "integrated_cost": 202068.24514559022,
+  "terminal_cost": 1440.0080729924846,
+  "failure_penalty": 400.0,
+  "fuel_used": 9000.0,
+  "final_mass": 6000.0,
+  "max_peak_thrust_fraction": 0.7855775735446873,
+  "max_constraint_violation": 0.0,
+  "touchdown_errors": {},
+  "final_tracking_state": {
+    "altitude": 0.019049390917643905,
+    "radial_velocity": -0.016259429465724184,
+    "attitude_error": -1.5181001447039932e-05,
+    "attitude_rate_error": 7.853129341149801e-09,
+    "along_track": 2.8185802574780148,
+    "along_track_velocity": -0.002994105043319095,
+    "mass_error": -3000.0
+  }
+}

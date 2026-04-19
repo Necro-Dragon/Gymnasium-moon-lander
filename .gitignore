@@ -1,5 +1,16 @@
 .venv/
 __pycache__/
 *.py[cod]
-outputs/
+
+# Keep ad hoc local artifacts ignored by default, but allow the curated
+# benchmark bundles and summary tables to be checked into the repository.
+outputs/*
+!outputs/benchmark.csv
+!outputs/benchmark.md
+!outputs/scripted_hover_descent/
+!outputs/scripted_hover_descent/**
+!outputs/tvlqr_tracking/
+!outputs/tvlqr_tracking/**
+outputs/**/frames/
+outputs/**/.DS_Store
 .DS_Store

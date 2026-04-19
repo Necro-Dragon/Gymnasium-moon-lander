@@ -1,0 +1,30 @@
+{
+  "controller_name": "tvlqr_tracking",
+  "scenario_name": "nominal",
+  "success": true,
+  "terminal_status": "touchdown_success",
+  "total_cost": 97175.63596960968,
+  "integrated_cost": 94209.47894468365,
+  "terminal_cost": 2966.1570249260244,
+  "failure_penalty": 0.0,
+  "fuel_used": 1694.8408824676753,
+  "final_mass": 13305.159117532325,
+  "max_peak_thrust_fraction": 0.9999999999999998,
+  "max_constraint_violation": 0.0,
+  "touchdown_errors": {
+    "radial_velocity": 0.005901612899887129,
+    "along_track_velocity": 0.24948554590820127,
+    "attitude_error_deg": 0.000410940692651506,
+    "attitude_rate_error_deg_s": 1.0920176472515178e-06,
+    "remaining_mass_margin": 13305.159117532325
+  },
+  "final_tracking_state": {
+    "altitude": -8.924631401896477e-05,
+    "radial_velocity": -0.005901612899887129,
+    "attitude_error": -7.172268117194847e-06,
+    "attitude_rate_error": -1.905930343442099e-08,
+    "along_track": 22.320372308708325,
+    "along_track_velocity": -0.24948554590820127,
+    "mass_error": 4305.159117532325
+  }
+}

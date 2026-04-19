@@ -1,0 +1,9 @@
+controller,scenario,success,terminal_status,total_cost,integrated_cost,terminal_cost,failure_penalty,fuel_used,final_mass,max_peak_thrust_fraction,max_constraint_violation,artifact_dir
+scripted_hover_descent,attitude_recovery,False,fuel_depletion,198125.27590056587,196285.26859556726,1440.0073049986042,400.0,9000.0,6000.0,0.9999999999999998,0.0,outputs/scripted_hover_descent/attitude_recovery
+scripted_hover_descent,crossrange,False,touchdown_off_pad,158907.5427971983,157662.9115453655,744.6312518327869,500.0,3852.5027252906257,11147.497274709374,0.9999999999999998,0.0,outputs/scripted_hover_descent/crossrange
+scripted_hover_descent,low_fuel,False,fuel_depletion,47977.2817368353,46135.36585934731,1441.9158774879927,400.0,2250.0,6000.0,0.3147437878855805,0.0,outputs/scripted_hover_descent/low_fuel
+scripted_hover_descent,nominal,False,fuel_depletion,203908.25321858271,202068.24514559022,1440.0080729924846,400.0,9000.0,6000.0,0.7855775735446873,0.0,outputs/scripted_hover_descent/nominal
+tvlqr_tracking,attitude_recovery,True,touchdown_success,94808.14271603675,91747.06778908939,3061.074926947359,0.0,1626.3986114583822,13373.601388541618,0.9999999999999998,0.0,outputs/tvlqr_tracking/attitude_recovery
+tvlqr_tracking,crossrange,False,touchdown_off_pad,84074.45379725774,80086.43542147522,3488.0183757825175,500.0,1338.286527389455,13661.713472610545,0.9999999984575595,0.0,outputs/tvlqr_tracking/crossrange
+tvlqr_tracking,low_fuel,False,fuel_depletion,44581.46768530639,42741.46684698631,1440.0008383200775,400.0,2250.0,6000.0,0.9999999999999998,0.0,outputs/tvlqr_tracking/low_fuel
+tvlqr_tracking,nominal,True,touchdown_success,97175.63596960968,94209.47894468365,2966.1570249260244,0.0,1694.8408824676753,13305.159117532325,0.9999999999999998,0.0,outputs/tvlqr_tracking/nominal
